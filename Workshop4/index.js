@@ -31,3 +31,9 @@ app.get('/' , (req, res) => {
 app.listen(port, () => {
     console.log(`Sercver is running on http://localhost:${port}`);
 });
+
+const operation = require('./Workshop4_1')
+console.log(operation("add", 4, 5));
+console.log(operation("subtract", 10, 3));
+console.log(operation("multiply", 5, 6));
+console.log(operation("divide",8 ,2));
