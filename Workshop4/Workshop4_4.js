@@ -37,13 +37,13 @@ Promise.any([
     console.log(error);
 });
 
-// // กรณีที่ 2 
-// Promise.allSettled([
-//     fetchDataFromServer1(),
-//     fetchDataFromServer2(),
-//     fetchDataFromServer3()
-// ])
+// กรณีที่ 2 
+Promise.allSettled([
+    fetchDataFromServer1(),
+    fetchDataFromServer2(),
+    fetchDataFromServer3()
+])
 
-// .then((results) => {
-//     console.log(results);
-// });
+.then((results) => {
+    console.log(results);
+});
