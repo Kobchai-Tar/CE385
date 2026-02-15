@@ -1,6 +1,3 @@
-const express = require('express');
-const app = express();
-
 // Query Parameters
 
 // // เปิดใช้งาน body parser สำหรับรับข้อมูล JSON
@@ -26,12 +23,17 @@ const app = express();
 // });
 
 // URL Parameters
+
+const express = require('express');
+const app = express();
+
+
 app.use(express.json());
 
 const students = [
     {id:1, name:"Gus" , age: 18},
-    {id:2, name:"Tar", age:19},
-    {id:3, name:"Tum", age: 20}
+    {id:2, name:"Tar", age: 19},
+    {id:3, name:"Tum", age: 100}
 ]
 app.get('/api/students', (req, res) => {
     res.json(students)
@@ -69,6 +71,44 @@ app.post('/api/students/', validateStudent , (req, res) => {
     };
     students.push(newStudent);
     res.status(201).json(newStudent);
+});
+
+app.put('/api/students/:id', validateStudent, (req, res) => {
+
+    const id = parseInt(req.params.id);
+    const { name, age } = req.body;
+
+    const student = students.find(s => s.id === id);
+
+    if (!student) {
+        return res.status(404).json({ message: "Student not found" });
+    }
+
+    student.name = name;
+    student.age = age;
+
+    res.json({
+        message: "Student updated successfully",
+        data: student
+    });
+});
+
+app.delete('/api/students/:id', (req, res) => {
+
+    const id = parseInt(req.params.id);
+
+    const studentIndex = students.findIndex(s => s.id === id);
+
+    if (studentIndex === -1) {
+        return res.status(404).json({ message: "Student not found" });
+    }
+
+    const deletedStudent = students.splice(studentIndex, 1);
+
+    res.json({
+        message: "Student deleted successfully",
+        data: deletedStudent
+    });
 });
 
 app.listen(3000,() => {
